@@ -15,3 +15,4 @@ $componente->setUrl_amazon('https://www.amazon.es/Nfortec-Refrigeraci%C3%B3n-L%C
 $componente->setUrl_imagen('https://img.pccomponentes.com/articles/23/230249/11.jpg');
 
 $componente->registrar();
+echo 'hola';

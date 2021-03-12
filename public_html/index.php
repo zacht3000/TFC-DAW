@@ -1,30 +1,41 @@
 <?php
 
 require_once './Componente.php';
+require_once './Procesador.php';
 
 $jsonCont = file_get_contents('Procesadores___Google_Shopping.json');
 $content = json_decode($jsonCont, true);
 
-foreach ($content as $value) {
-    $nombre = $value['nombre'];
-    $proveedor = $value['Vendidopor'];
-    $precio_articulo = floatval($value['Preciodelartículo']);
-    $precio_total = floatval($value['Preciototal']);
-    $url_imagen = $value['Image_URL'];
-    $url_articulo = $value['internallink_URL'];
+/* foreach ($content as $value) {
+  $nombre = $value['nombre'];
+  $proveedor = $value['Vendidopor'];
+  $precio_articulo = floatval($value['Preciodelartículo']);
+  $precio_total = floatval($value['Preciototal']);
+  $url_imagen = $value['Image_URL'];
+  $url_articulo = $value['internallink_URL'];
 
-    $tipo = 'procesador';
 
-    $procesador = new Componente();
-    $procesador->setNombre($nombre);
-    $procesador->setProveedor($proveedor);
-    $procesador->setPrecio_articulo($precio_articulo);
-    $procesador->setPrecio_total($precio_total);
-    $procesador->setUrl_imagen($url_imagen);
-    $procesador->setUrl_articulo($url_articulo);
-    $procesador->setTipo($tipo);
+  } */
 
-    $procesador->registrar();
-}
+
+/* $componente = new Componente();
+  $componente->setNombre("AS");
+  $componente->setProveedor("as");
+  $componente->setPrecio_articulo(6);
+  $componente->setPrecio_total(7);
+  $componente->setUrl_imagen("asasasasas");
+  $componente->setUrl_articulo("asasasas");
+  $componente->setTipo('procesador');
+
+  $componente->registrar();
+ */
+
+$procesador = new Procesador();
+$procesador->setId_componente(818);
+$procesador->setFrecuencia(3.79);
+$procesador->setSocket('LGA 1151');
+$procesador->setNucleos(4);
+
+$procesador->registrar();
 
 

@@ -5,6 +5,7 @@ require_once './database.php';
 class Componente {
 
     private $db;
+    private $id;
     private $nombre;
     private $proveedor;
     private $precio_articulo;
@@ -43,6 +44,11 @@ class Componente {
     }
 
     /*     * ************************************************** GETTERS AND SETTERS *************************************************** */
+
+    public function getId() {
+        $result = $this->db->query('SELECT id FROM componente order by id desc');
+        return $result->fetch_array()['id'];       
+    }
 
     public function getNombre() {
         return $this->nombre;

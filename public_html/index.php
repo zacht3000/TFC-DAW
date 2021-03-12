@@ -1,10 +1,10 @@
 <?php
 
-require_once './Componente.php';
-require_once './Procesador.php';
+require_once 'BBDD_Entidades/Componente.php';
+require_once 'BBDD_Entidades/Procesador.php';
 
-$jsonCont = file_get_contents('Procesadores___Google_Shopping.json');
-$content = json_decode($jsonCont, true);
+/* $jsonCont = file_get_contents('Procesadores___Google_Shopping.json');
+  $content = json_decode($jsonCont, true); */
 
 /* foreach ($content as $value) {
   $nombre = $value['nombre'];
@@ -18,20 +18,19 @@ $content = json_decode($jsonCont, true);
   } */
 
 
-/* $componente = new Componente();
-  $componente->setNombre("AS");
-  $componente->setProveedor("as");
-  $componente->setPrecio_articulo(6);
-  $componente->setPrecio_total(7);
-  $componente->setUrl_imagen("asasasasas");
-  $componente->setUrl_articulo("asasasas");
-  $componente->setTipo('procesador');
+$componente = new Componente();
+$componente->setNombre("AS");
+$componente->setProveedor("as");
+$componente->setPrecio_articulo(6);
+$componente->setPrecio_total(7);
+$componente->setUrl_imagen("asasasasas");
+$componente->setUrl_articulo("asasasas");
+$componente->setTipo('procesador');
 
-  $componente->registrar();
- */
+$componente->registrar();
 
 $procesador = new Procesador();
-$procesador->setId_componente(818);
+$procesador->setId_componente($componente->getId());
 $procesador->setFrecuencia(3.79);
 $procesador->setSocket('LGA 1151');
 $procesador->setNucleos(4);

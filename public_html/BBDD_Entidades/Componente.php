@@ -33,8 +33,11 @@ class Componente {
                         '$this->url_imagen', 
                         '$this->url_articulo', 
                         '$this->tipo')";
-
-        return $this->db->query($query);
+        if (!$this->db->query($query) === TRUE) {
+            die("<br>Error: " . $query . "<br>" . $this->db->error);
+        }
+        
+        return $this->db->insert_id;
     }
 
     public function eliminar($id) {
@@ -47,7 +50,7 @@ class Componente {
 
     public function getId() {
         $result = $this->db->query('SELECT id FROM componente order by id desc');
-        return $result->fetch_array()['id'];       
+        return $result->fetch_array()['id'];
     }
 
     public function getNombre() {

@@ -15,7 +15,7 @@ foreach ($content as $key => $value) {
     $url_imagen = $value['Image_URL'];
     $url_articulo = $value['internallink_URL'];
     $caracteristicas = $value['caracteristicas'];
-    $tipo = 'discos_duros';
+    $tipo = 'disco_duro';
     
     $componente = new Componente();
     $componente->setNombre($nombre);

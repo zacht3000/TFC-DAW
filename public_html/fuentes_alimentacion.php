@@ -15,7 +15,7 @@ foreach ($content as $key => $value) {
     $url_imagen = $value['Image_URL'];
     $url_articulo = $value['internallink_URL'];
     $caracteristicas = $value['caracteristicas'];
-    $tipo = 'placa_base';
+    $tipo = 'fuentes_alimentacion';
 
     $componente = new Componente();
     $componente->setNombre($nombre);

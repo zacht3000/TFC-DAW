@@ -2,7 +2,7 @@
 
 require_once './database.php';
 
-class Placa_base {
+class Caja {
 
     private $db;
     private $id_componente;

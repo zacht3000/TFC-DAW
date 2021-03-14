@@ -7,7 +7,7 @@ $jsonCont = file_get_contents('./JSON_bbdd/PlacasBasesSPECTS_Google_Shopping.jso
 $content = json_decode($jsonCont, true);
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
-    $proveedor $value['Vendidopor'];
+    $proveedor = $value['Vendidopor'];
     preg_match('/([0-9.])+/', $value['Preciodelartículo'], $output_array);
     $precio_articulo = (float) $output_array[0];
     preg_match('/([0-9.])+/', $value['Preciototal'], $output_array);
@@ -27,7 +27,7 @@ foreach ($content as $key => $value) {
     $componente->setTipo($tipo);
 
     $placabase = new Placa_Base();
-    $placabase = setId_componente($componente->registrar());
+    $placabase->setId_componente($componente->registrar());
     preg_match_all('/(ATX)|([a-zA-Z]{3,6}\sATX)|([a-zA-Z]{3,6}ATX)/', $caracteristicas, $factor_forma);
     preg_match_all('/Socket ([A-Za-z]*\s[0-9]*|[A-Za-z0-9]*)/', $caracteristicas, $socket);
     $placabase->setFactor_forma($factor_forma[1][0]);

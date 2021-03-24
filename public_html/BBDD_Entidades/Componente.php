@@ -1,6 +1,5 @@
 <?php
-
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/Proyecto_Final_DAW/TFC-DAW\public_html/database.php");
 
 class Componente {
 
@@ -21,6 +20,12 @@ class Componente {
     public function getComponentes() {
         $query = $this->db->query('SELECT * FROM componente');
 
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getComponentesTipo($tipo) {
+        $query = $this->db->query('SELECT * FROM (' . $tipo . ')');
+        
         return $query->fetch_all(MYSQLI_ASSOC);
     }
 

@@ -5,22 +5,19 @@
  */
 header('Content-Type: application/json');
 switch ($_SERVER['REQUEST_METHOD']) {
-    case 'POST':
-        $_POST = json_decode(file_get_contents('php://input'), true);
-    break;
     case 'GET':
-        if($isset($_GET['id']))
-            echo 'El producto es ' . $_GET['id']; 
-        else
-            echo 'Renornar todos los usuarios';
-    break;
-    case 'PUT':
-        echo 'Actualizar';
-    break;
-    case 'DELETE';
-        echo 'Eliminar';
+        require_once dirname(__FILE__) . '/Componente.php';
+        if(isset($_GET['tipo'])){
+            $componentes = new Componente();
+            $resultadoQuery = $componentes->getComponentesTipo($_GET['tipo']);
+        } else {
+            $componentes = new Componente();
+            $resultadoQuery = $componentes->getComponentes();
+        }
+        echo json_encode($resultadoQuery);
     break;
     default:
-        echo 'Lo sentimos, se produjo un error.';
-    break;
+        echo json_encode('Lo sentimos, se produjo un error.');
+        break;
 }
+

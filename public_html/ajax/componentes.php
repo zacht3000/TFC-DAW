@@ -10,6 +10,9 @@ switch ($_SERVER['REQUEST_METHOD']) {
         if(isset($_GET['tipo'])){
             $componentes = new Componente();
             $resultadoQuery = $componentes->getComponentesTipo($_GET['tipo']);
+        }else if(isset($_GET['oferta'])){
+            $componentes = new Componente();
+            $resultadoQuery = $componentes->getComponentesOferta();
         } else {
             $componentes = new Componente();
             $resultadoQuery = $componentes->getComponentes();

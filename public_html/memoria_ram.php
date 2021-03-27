@@ -1,7 +1,7 @@
 <?php
 
 require_once './BBDD_Entidades/Componente.php';
-require_once './BBDD_Entidades/memoria_ram.php';
+require_once './BBDD_Entidades/Memoria_ram.php';
 
 $jsonCont = file_get_contents('./JSON_bbdd/MemoriasRAMSPECTS___Google_Shopping.json');
 $content = json_decode($jsonCont, true);

@@ -4,7 +4,7 @@ include($_SERVER['DOCUMENT_ROOT']."/Proyecto_Final_DAW/TFC-DAW\public_html/datab
 class Componente {
 
     private $db;
-    private $id;
+    
     private $nombre;
     private $proveedor;
     private $precio_articulo;
@@ -25,6 +25,12 @@ class Componente {
     
     public function getComponentesTipo($tipo) {
         $query = $this->db->query('SELECT * FROM (' . $tipo . ')');
+        
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getComponentesOferta() {
+        $query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_mínimo, url_imagen, url_articulo, tipo FROM componente group by nombre order by 1');      
         
         return $query->fetch_all(MYSQLI_ASSOC);
     }

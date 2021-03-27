@@ -5,10 +5,11 @@ require_once './BBDD_Entidades/Tarjeta_grafica.php';
 
 $jsonCont = file_get_contents('./JSON_bbdd/GraficasSPECTS___Google_Shopping.json');
 $content = json_decode($jsonCont, true);
+
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
     $proveedor = $value['Vendidopor'];
-    preg_match('/([0-9.])+/', $value['Preciodelartículo'], $output_array);
+    preg_match('/([0-9.])+/', $value['Preciodelarticulo'], $output_array);
     $precio_articulo = (float) $output_array[0];
     preg_match('/([0-9.])+/', $value['Preciototal'], $output_array);
     $precio_total = (float) $output_array[0];
@@ -29,12 +30,12 @@ foreach ($content as $key => $value) {
     $grafica = new Tarjeta_grafica();
     $grafica->setId_componente($componente->registrar());
     $vrams = ['8GB', '4GB', '10GB'];
-      preg_match_all('/([A-Za-z0-9]*\sGB|[A-Za-z0-9]*GB|[A-Za-z0-9]*gb|[A-Za-z0-9]*Gb)/', $caracteristicas, $vram);
-      echo isset($vram[0][0]);
-      if(!isset($vram[0][0]) || !isset($vram)){
-      $vram[0][0] = $vrams[rand(0,count($vrams) - 1)];
-      }
-      //echo $key . ' VRAM: '. $vram[0][0] . '<br>';
+    preg_match_all('/([A-Za-z0-9]*\sGB|[A-Za-z0-9]*GB|[A-Za-z0-9]*gb|[A-Za-z0-9]*Gb)/', $caracteristicas, $vram);
+    echo isset($vram[0][0]);
+    if (!isset($vram[0][0]) || !isset($vram)) {
+        $vram[0][0] = $vrams[rand(0, count($vrams) - 1)];
+    }
+    //echo $key . ' VRAM: '. $vram[0][0] . '<br>';
     $grafica->setVram($vram[0][0]);
     $grafica->registrar();
 }

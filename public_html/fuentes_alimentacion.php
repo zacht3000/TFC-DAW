@@ -3,7 +3,7 @@
 require_once './BBDD_Entidades/Componente.php';
 require_once './BBDD_Entidades/Fuente_alimentacion.php';
 
-$jsonCont = file_get_contents('./JSON_bbdd/FuentesAlimentacionSPECTS_Google_Shopping.json');
+$jsonCont = file_get_contents('./JSON_bbdd/FuentesAlimentacionSPECTS___Google_Shopping');
 $content = json_decode($jsonCont, true);
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
@@ -16,7 +16,7 @@ foreach ($content as $key => $value) {
     $url_articulo = $value['internallink_URL'];
     $caracteristicas = $value['caracteristicas'];
     $tipo = 'fuente_alimentacion';
-
+    
     $componente = new Componente();
     $componente->setNombre($nombre);
     $componente->setProveedor($proveedor);

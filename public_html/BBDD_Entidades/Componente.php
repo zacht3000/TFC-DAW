@@ -1,10 +1,10 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/Proyecto_Final_DAW/TFC-DAW\public_html/database.php");
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Componente {
 
     private $db;
-    
+    private $id;
     private $nombre;
     private $proveedor;
     private $precio_articulo;
@@ -29,8 +29,14 @@ class Componente {
         return $query->fetch_all(MYSQLI_ASSOC);
     }
     
+    public function getComponentesTipoProcesador() {
+        $query = $this->db->query('SELECT * FROM componente WHERE `tipo` LIKE \'procesador\' ORDER BY nombre limit 20');      
+        
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
     public function getComponentesOferta() {
-        $query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_mínimo, url_imagen, url_articulo, tipo FROM componente group by nombre order by 1');      
+        $query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_minimo, url_imagen, url_articulo, tipo FROM componente group by nombre order by rand() limit 6');      
         
         return $query->fetch_all(MYSQLI_ASSOC);
     }

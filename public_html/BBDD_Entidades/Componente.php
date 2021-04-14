@@ -17,26 +17,20 @@ class Componente {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
+   public function getComponentes() {
         $query = $this->db->query('SELECT * FROM componente');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
     
     public function getComponentesTipo($tipo) {
-        $query = $this->db->query('SELECT * FROM (' . $tipo . ')');
-        
-        return $query->fetch_all(MYSQLI_ASSOC);
-    }
-    
-    public function getComponentesTipoProcesador() {
-        $query = $this->db->query('SELECT * FROM componente WHERE `tipo` LIKE \'procesador\' ORDER BY nombre limit 20');      
-        
+        $query = $this->db->query('SELECT * FROM componente WHERE `tipo` LIKE \'' . $tipo . '\'');
+
         return $query->fetch_all(MYSQLI_ASSOC);
     }
     
     public function getComponentesOferta() {
-        $query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_minimo, url_imagen, url_articulo, tipo FROM componente group by nombre order by rand() limit 6');      
+        $query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_minimo, url_imagen, url_articulo, tipo FROM componente group by nombre ORDER BY rand() LIMIT 6');      
         
         return $query->fetch_all(MYSQLI_ASSOC);
     }

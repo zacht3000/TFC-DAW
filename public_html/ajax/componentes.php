@@ -9,18 +9,16 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Componente.php';
+        
         if(isset($_GET['tipo'])){
             $componentes = new Componente();
-            $resultadoQuery = $componentes->getComponentesTipo($_GET['tipo']);
+            if($_GET['tipo'] !== 'componentes')
+                $resultadoQuery = $componentes->getComponentesTipo($_GET['tipo']);
+            else
+                 $resultadoQuery = $componentes->getComponentes();
         }else if(isset($_GET['oferta'])){
             $componentes = new Componente();
             $resultadoQuery = $componentes->getComponentesOferta();
-        }else if(isset($_GET['procesador'])){
-            $componentes = new Componente();
-            $resultadoQuery = $componentes->getComponentesTipoProcesador();
-        }else {
-            $componentes = new Componente();
-            $resultadoQuery = $componentes->getComponentes();
         }
         echo json_encode($resultadoQuery);
     break;

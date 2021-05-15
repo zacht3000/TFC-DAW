@@ -1,6 +1,6 @@
 <?php
 
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Caja {
 
@@ -12,8 +12,8 @@ class Caja {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+    public function getCajas() {
+        $query = $this->db->query("SELECT * FROM componente WHERE tipo = 'caja'");
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
@@ -25,6 +25,12 @@ class Caja {
                  )";
 
         return $this->db->query($query);
+    }
+    
+    public function getCajaGenerador($min) {
+        $query = $this->db->query('SELECT  cj.id_componente, c.nombre, c.proveedor, c.precio_total, cj.tipo_placa_base FROM caja cj, componente c WHERE c.id = cj.id_componente AND cj.tipo_placa_base LIKE \'' . $min . '\' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+
+        return $query->fetch_all(MYSQLI_ASSOC);
     }
 
     public function eliminar($id) {

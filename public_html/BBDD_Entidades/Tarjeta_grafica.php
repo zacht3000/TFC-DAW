@@ -1,6 +1,6 @@
 <?php
 
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Tarjeta_grafica {
 
@@ -12,8 +12,18 @@ class Tarjeta_grafica {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+    public function getTarjetasGraficas() {
+        $query = $this->db->query("SELECT * FROM componente WHERE tipo = 'tarjeta_grafica'");
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+     public function getTarjetaGraficaGenerador($min, $max) {
+        if($max > 0){
+            $query = $this->db->query('SELECT tg.id_componente, c.nombre, c.proveedor, c.precio_total, tg.vram FROM tarjeta_grafica tg, componente c WHERE c.id = tg.id_componente AND tg.vram >= ' .$min . ' AND tg.vram <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        } else {
+            $query = $this->db->query('SELECT tg.id_componente, c.nombre, c.proveedor, c.precio_total, tg.vram FROM tarjeta_grafica tg, componente c WHERE c.id = tg.id_componente AND tg.vram = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        }
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

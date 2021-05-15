@@ -1,6 +1,6 @@
 <?php
 
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Disco_duro {
 
@@ -13,8 +13,8 @@ class Disco_duro {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+    public function getDiscosDuros() {
+        $query = $this->db->query("SELECT * FROM componente WHERE tipo = 'disco_duro'");
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
@@ -27,6 +27,13 @@ class Disco_duro {
                  )";
 
         return $this->db->query($query);
+    }
+    
+    public function getDicosDurosGenerador($tipo, $min) {
+            $query = $this->db->query('SELECT dd.id_componente, c.nombre, c.proveedor, c.precio_total, dd.almacenamiento, dd.tipo FROM disco_duro dd, componente c WHERE c.id = dd.id_componente AND dd.tipo LIKE \'' . $tipo . '\' AND dd.almacenamiento = '. $min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        
+
+        return $query->fetch_all(MYSQLI_ASSOC);
     }
 
     public function eliminar($id) {

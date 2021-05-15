@@ -18,13 +18,19 @@ class Componente {
     }
 
    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+        $query = $this->db->query('SELECT * FROM componente LIMIT 40');
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getComponentesSearch($nombre) {
+        $query = $this->db->query('SELECT id, nombre, proveedor, precio_total, url_imagen, url_articulo FROM componente where nombre LIKE \'' . $nombre . '\'');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
     
     public function getComponentesTipo($tipo) {
-        $query = $this->db->query('SELECT * FROM componente WHERE `tipo` LIKE \'' . $tipo . '\'');
+        $query = $this->db->query('SELECT id, nombre, proveedor, min(precio_total) as precio_minimo, url_imagen FROM componente where tipo LIKE \'' . $tipo . '\' group by nombre');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

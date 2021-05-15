@@ -1,6 +1,5 @@
 <?php
-
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Memoria_ram {
 
@@ -14,8 +13,18 @@ class Memoria_ram {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+    public function getMemoriasRam() {
+        $query = $this->db->query("SELECT * FROM componente WHERE tipo = 'memoria_ram'");
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getMemoriaGenerador($min, $max) {
+        if($max > 0){
+            $query = $this->db->query('SELECT  mr.id_componente, c.nombre, c.proveedor, c.precio_total, mr.memoria_interna FROM memoria_ram mr, componente c WHERE c.id = mr.id_componente AND mr.memoria_interna >= ' .$min . ' AND mr.memoria_interna <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        } else {
+            $query = $this->db->query('SELECT  mr.id_componente, c.nombre, c.proveedor, c.precio_total, mr.memoria_interna FROM memoria_ram mr, componente c WHERE c.id = mr.id_componente AND mr.memoria_interna = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        }
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

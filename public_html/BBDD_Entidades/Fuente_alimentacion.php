@@ -1,6 +1,6 @@
 <?php
 
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Fuente_alimentacion {
 
@@ -12,8 +12,18 @@ class Fuente_alimentacion {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+    public function getFuentesAlimentacion() {
+        $query = $this->db->query("SELECT * FROM componente WHERE tipo = 'fuente_alimentacion'");
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getFuenteAlimentacionGenerador($min, $max) {
+        if($max > 0){
+            $query = $this->db->query('SELECT  fa.id_componente, c.nombre, c.proveedor, c.precio_total, fa.potencia FROM fuente_alimentacion fa, componente c WHERE c.id = fa.id_componente AND fa.potencia >= ' .$min . ' AND fa.potencia <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        } else {
+            $query = $this->db->query('SELECT  fa.id_componente, c.nombre, c.proveedor, c.precio_total, fa.potencia FROM fuente_alimentacion fa, componente c WHERE c.id = fa.id_componente AND fa.potencia = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        }
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

@@ -1,6 +1,5 @@
 <?php
-
-require_once './database.php';
+include($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Procesador {
 
@@ -14,8 +13,18 @@ class Procesador {
         $this->db = DataBase::connect_db();
     }
 
-    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente');
+    public function getProcesadores() {
+        $query = $this->db->query("SELECT * FROM componente WHERE tipo = 'procesador'");
+
+        return $query->fetch_all(MYSQLI_ASSOC);
+    }
+    
+    public function getProcesadorGenerador($min, $max) {
+        if($max > 0){
+            $query = $this->db->query('SELECT p.id_componente, c.nombre, c.proveedor, c.precio_total, p.socket, p.frecuencia, p.nucleos FROM procesador p, componente c WHERE c.id = p.id_componente AND p.nucleos => '. $min .' AND p.nucleos <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        } else {
+            $query = $this->db->query('SELECT p.id_componente, c.nombre, c.proveedor, c.precio_total, p.socket, p.frecuencia, p.nucleos FROM procesador p, componente c WHERE c.id = p.id_componente AND p.nucleos = '. $min .' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        }
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

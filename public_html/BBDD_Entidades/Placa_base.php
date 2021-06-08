@@ -1,6 +1,6 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT']."/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Placa_base {
 
@@ -20,7 +20,7 @@ class Placa_base {
     }
     
     public function getPlacaBaseGenerador($min) {
-        $query = $this->db->query('SELECT  pb.id_componente, c.nombre, c.proveedor, c.precio_total, pb.factor_forma, pb.socket FROM placa_base pb, componente c WHERE c.id = pb.id_componente AND pb.socket LIKE \'%' . $min . '\' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        $query = $this->db->query('SELECT  pb.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,pb.factor_forma, pb.socket, c.tipo as "tipo_componente" FROM placa_base pb, componente c WHERE c.id = pb.id_componente AND pb.socket LIKE \'%' . $min . '\' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

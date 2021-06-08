@@ -5,8 +5,15 @@
         <group>
             <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/ajax/componentes.php</file>
             <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/discos_duros.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Tarjeta_grafica.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Placa_base.php</file>
             <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Componente.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Fuente_alimentacion.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Disco_duro.php</file>
             <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/database.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Memoria_ram.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Caja.php</file>
+            <file>file:/C:/xampp/htdocs/TFC-DAW/TFC-DAW-master/public_html/BBDD_Entidades/Procesador.php</file>
         </group>
     </open-files>
 </project-private>

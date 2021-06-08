@@ -3,12 +3,12 @@
 require_once './BBDD_Entidades/Componente.php';
 require_once './BBDD_Entidades/Fuente_alimentacion.php';
 
-$jsonCont = file_get_contents('./JSON_bbdd/FuentesAlimentacionSPECTS___Google_Shopping');
+$jsonCont = file_get_contents('./NUEVOS_JSON/FuentesAlimentacionSPECTS___Google_Shopping.json');
 $content = json_decode($jsonCont, true);
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
     $proveedor = $value['Vendidopor'];
-    preg_match('/([0-9.])+/', $value['Preciodelartículo'], $output_array);
+    preg_match('/([0-9.])+/', $value['Preciodelarticulo'], $output_array);
     $precio_articulo = (float) $output_array[0];
     preg_match('/([0-9.])+/', $value['Preciototal'], $output_array);
     $precio_total = (float) $output_array[0];
@@ -16,7 +16,7 @@ foreach ($content as $key => $value) {
     $url_articulo = $value['internallink_URL'];
     $caracteristicas = $value['caracteristicas'];
     $tipo = 'fuente_alimentacion';
-    
+
     $componente = new Componente();
     $componente->setNombre($nombre);
     $componente->setProveedor($proveedor);
@@ -28,9 +28,13 @@ foreach ($content as $key => $value) {
 
     $fuentesalimentacion = new Fuente_alimentacion();
     $fuentesalimentacion->setId_componente($componente->registrar());
-    preg_match_all('/([A-Za-z0-9]*\sW|[A-Za-z0-9]*W|[A-Za-z0-9]*vatios|[A-Za-z0-9]*\svatios)/', $nombre, $potencia);
+    /*preg_match_all('/([A-Za-z0-9]*\sW|[A-Za-z0-9]*W|[A-Za-z0-9]*vatios|[A-Za-z0-9]*\svatios)/', $nombre, $potencia);
     if(!isset($potencia[0][0])){
         preg_match_all('/([A-Za-z0-9]*\sW|[A-Za-z0-9]*W|[A-Za-z0-9]*vatios|[A-Za-z0-9]*\svatios)/', $caracteristicas, $potencia);
+    }*/
+    preg_match_all('/([0-9]W|[0-9]*W|[0-9]*vatios|[0-9] vatios)/', $nombre, $potencia);
+    if(!isset($potencia[0][0])){
+        preg_match_all('/([0-9]W|[0-9]*W|[0-9]*vatios|[0-9] vatios)/', $caracteristicas, $potencia);
     }
     //echo $key . ' Potencia: ' . $potencia[0][0] . '<br>';
     $fuentesalimentacion->setPotencia($potencia[0][0]);

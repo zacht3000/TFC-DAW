@@ -1,5 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Componente {
 
@@ -18,7 +18,7 @@ class Componente {
     }
 
    public function getComponentes() {
-        $query = $this->db->query('SELECT * FROM componente LIMIT 40');
+        $query = $this->db->query('SELECT * FROM componente ORDER BY rand() LIMIT 40');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
@@ -30,13 +30,16 @@ class Componente {
     }
     
     public function getComponentesTipo($tipo) {
-        $query = $this->db->query('SELECT id, nombre, proveedor, min(precio_total) as precio_minimo, url_imagen FROM componente where tipo LIKE \'' . $tipo . '\' group by nombre');
+        /*
+        $query = $this->db->query('SELECT id, nombre, proveedor, min(precio_total) as precio_minimo, url_imagen FROM componente where tipo LIKE \'' . $tipo . '\' group by nombre');*/
+         $query = $this->db->query('SELECT comp.id, comp.nombre, comp.precio_total  as precio_minimo, comp.proveedor, comp.url_imagen FROM componente comp where comp.tipo LIKE \'' . $tipo . '\' and comp.precio_total in (SELECT MIN(c.precio_total) FROM componente c group by c.nombre) group by comp.nombre');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }
     
     public function getComponentesOferta() {
-        $query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_minimo, url_imagen, url_articulo, tipo FROM componente group by nombre ORDER BY rand() LIMIT 6');      
+        /*$query = $this->db->query('SELECT nombre, proveedor, min(precio_total) as precio_minimo, url_imagen, url_articulo, tipo FROM componente group by nombre ORDER BY rand() LIMIT 6'); */   
+        $query = $this->db->query('SELECT * FROM componente WHERE (id, precio_total) IN (SELECT id, MIN(precio_total) FROM componente GROUP by nombre) ORDER by rand() LIMIT 6');
         
         return $query->fetch_all(MYSQLI_ASSOC);
     }

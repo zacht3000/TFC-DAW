@@ -1,6 +1,6 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT']."/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Fuente_alimentacion {
 
@@ -20,9 +20,9 @@ class Fuente_alimentacion {
     
     public function getFuenteAlimentacionGenerador($min, $max) {
         if($max > 0){
-            $query = $this->db->query('SELECT  fa.id_componente, c.nombre, c.proveedor, c.precio_total, fa.potencia FROM fuente_alimentacion fa, componente c WHERE c.id = fa.id_componente AND fa.potencia >= ' .$min . ' AND fa.potencia <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+            $query = $this->db->query('SELECT  fa.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,fa.potencia, c.tipo as "tipo_componente" FROM fuente_alimentacion fa, componente c WHERE c.id = fa.id_componente AND fa.potencia >= ' .$min . ' AND fa.potencia <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
         } else {
-            $query = $this->db->query('SELECT  fa.id_componente, c.nombre, c.proveedor, c.precio_total, fa.potencia FROM fuente_alimentacion fa, componente c WHERE c.id = fa.id_componente AND fa.potencia = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+            $query = $this->db->query('SELECT  fa.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,fa.potencia, c.tipo as "tipo_componente" FROM fuente_alimentacion fa, componente c WHERE c.id = fa.id_componente AND fa.potencia = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
         }
 
         return $query->fetch_all(MYSQLI_ASSOC);

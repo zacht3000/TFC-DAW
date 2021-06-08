@@ -44,6 +44,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
             } else if($_GET['tipoGenerador'] === 'discos'){
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Disco_duro.php';
                 $discos = new Disco_duro();
+                if($_GET['min'] == 1000){
+                    $_GET['min'] = 1;
+                } else if($_GET['min'] == 10000){
+                    $_GET['min'] = 10;
+                } else if($_GET['min'] == 20000){
+                    $_GET['min'] = 2;
+                }
                 $resultadoQuery = $discos->getDicosDurosGenerador($_GET['tipoDisco'], $_GET['min']); 
             }  else if($_GET['tipoGenerador'] === 'fuente'){
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Fuente_alimentacion.php';
@@ -52,7 +59,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
             } else if($_GET['tipoGenerador'] === 'placa'){
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Placa_base.php';
                 $placa = new Placa_base();
-                $resultadoQuery = $placa->getPlacaBaseGenerador($_GET['min']); 
+                $resultado = intval(preg_replace('/[^0-9]+/', '', $_GET['min']), 10); 
+                $resultadoQuery = $placa->getPlacaBaseGenerador($resultado); 
             } else if($_GET['tipoGenerador'] === 'placa'){
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Placa_base.php';
                 $placa = new Placa_base();
@@ -61,6 +69,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
                 require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Caja.php';
                 $caja = new Caja();
                 $resultadoQuery = $caja->getCajaGenerador($_GET['min']); 
+            }   else if($_GET['tipoGenerador'] === 'refrigeracion'){
+                require_once $_SERVER['DOCUMENT_ROOT'] . '/BBDD_Entidades/Refrigeracion.php';
+                $refrigeracion = new Refrigeracion();
+                if($_GET['tipoRefrigeracion'] !== 'stock'){
+                     $resultadoQuery = $refrigeracion->getRefrigeracionGenerador($_GET['tipoRefrigeracion']); 
+                }
             }
         }
 

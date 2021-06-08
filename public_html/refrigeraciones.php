@@ -1,9 +1,9 @@
 <?php
 
 require_once './BBDD_Entidades/Componente.php';
-require_once './BBDD_Entidades/Procesador.php';
+require_once './BBDD_Entidades/Refrigeracion.php';
 
-$jsonCont = file_get_contents('./NUEVOS_JSON/ProcesadoresSPECTS___Google_Shopping.json');
+$jsonCont = file_get_contents('./NUEVOS_JSON/RefrigeracionSPECTS___Google_Shopping.json');
 $content = json_decode($jsonCont, true);
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
@@ -15,8 +15,8 @@ foreach ($content as $key => $value) {
     $url_imagen = $value['Image_URL'];
     $url_articulo = $value['internallink_URL'];
     $caracteristicas = $value['caracteristicas'];
-    $tipo = 'procesador';
-
+    $tipo = 'refrigeracion';
+    
     $componente = new Componente();
     $componente->setNombre($nombre);
     $componente->setProveedor($proveedor);
@@ -25,15 +25,21 @@ foreach ($content as $key => $value) {
     $componente->setUrl_imagen($url_imagen);
     $componente->setUrl_articulo($url_articulo);
     $componente->setTipo($tipo);
+
+    $refrigeracion = new Refrigeracion();
+    $refrigeracion->setId_componente($componente->registrar());
+  
+    preg_match_all('/(Liquid)|(líquida)|(liquida)/', $nombre, $refrigeracion_liquida);
+    preg_match_all('/(Ventilador)/', $nombre, $refrigeracion_aire);
+
+    $tipoRefrigeracion;
+    if (isset($refrigeracion_liquida[0][0])) {
+        $tipoRefrigeracion = 'liquida';
+    } elseif (isset($refrigeracion_aire[0][0])) {
+        $tipoRefrigeracion = 'aire';
+    } 
     
-    $procesador = new Procesador();
-    $procesador->setId_componente($componente->registrar());
-    preg_match_all('/([0-9.,]*)\sGHz|([0-9.,]*\sGhz)|([0-9.,]*GHz)|([0-9.,]*Ghz)/', $caracteristicas, $frecuencia);
-    preg_match_all('/Socket ([A-Za-z]*\s[0-9]*|[A-Za-z0-9]*)/', $caracteristicas, $socket);
-    preg_match_all('/([0-9]*) núcleos/', $caracteristicas, $nucleos);
-    $procesador->setFrecuencia((float) str_replace(',', '.', str_replace('.', '', $frecuencia[1][0])));
-    $procesador->setSocket($socket[1][0]);
-    $procesador->setNucleos((int)$nucleos[1][0]);
-    $procesador->registrar();
-    
+    $refrigeracion->setTipo($tipoRefrigeracion);
+    $refrigeracion->registrar();
 }
+

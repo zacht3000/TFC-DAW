@@ -1,6 +1,6 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT']."/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Caja {
 
@@ -28,7 +28,7 @@ class Caja {
     }
     
     public function getCajaGenerador($min) {
-        $query = $this->db->query('SELECT  cj.id_componente, c.nombre, c.proveedor, c.precio_total, cj.tipo_placa_base FROM caja cj, componente c WHERE c.id = cj.id_componente AND cj.tipo_placa_base LIKE \'' . $min . '\' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+        $query = $this->db->query('SELECT  cj.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo, cj.tipo_placa_base, c.tipo as "tipo_componente" FROM caja cj, componente c WHERE c.id = cj.id_componente AND cj.tipo_placa_base LIKE \'' . $min . '\' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
 
         return $query->fetch_all(MYSQLI_ASSOC);
     }

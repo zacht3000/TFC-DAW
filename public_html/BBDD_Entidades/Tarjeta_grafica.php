@@ -1,6 +1,6 @@
 <?php
 
-include($_SERVER['DOCUMENT_ROOT']."/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Tarjeta_grafica {
 
@@ -20,9 +20,9 @@ class Tarjeta_grafica {
     
      public function getTarjetaGraficaGenerador($min, $max) {
         if($max > 0){
-            $query = $this->db->query('SELECT tg.id_componente, c.nombre, c.proveedor, c.precio_total, tg.vram FROM tarjeta_grafica tg, componente c WHERE c.id = tg.id_componente AND tg.vram >= ' .$min . ' AND tg.vram <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+            $query = $this->db->query('SELECT tg.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,tg.vram, c.tipo as "tipo_componente" FROM tarjeta_grafica tg, componente c WHERE c.id = tg.id_componente AND tg.vram >= ' .$min . ' AND tg.vram <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
         } else {
-            $query = $this->db->query('SELECT tg.id_componente, c.nombre, c.proveedor, c.precio_total, tg.vram FROM tarjeta_grafica tg, componente c WHERE c.id = tg.id_componente AND tg.vram = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+            $query = $this->db->query('SELECT tg.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,tg.vram, c.tipo as "tipo_componente" FROM tarjeta_grafica tg, componente c WHERE c.id = tg.id_componente AND tg.vram = ' .$min . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
         }
 
         return $query->fetch_all(MYSQLI_ASSOC);

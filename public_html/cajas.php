@@ -3,12 +3,12 @@
 require_once './BBDD_Entidades/Componente.php';
 require_once './BBDD_Entidades/Caja.php';
 
-$jsonCont = file_get_contents('./JSON_bbdd/CajasSPECTS___Google_Shopping.json');
+$jsonCont = file_get_contents('./NUEVOS_JSON/CajasSPECTS___Google_Shopping.json');
 $content = json_decode($jsonCont, true);
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
     $proveedor = $value['Vendidopor'];
-    preg_match('/([0-9.])+/', $value['Preciodelartículo'], $output_array);
+    preg_match('/([0-9.])+/', $value['Preciodelarticulo'], $output_array);
     $precio_articulo = (float) $output_array[0];
     preg_match('/([0-9.])+/', $value['Preciototal'], $output_array);
     $precio_total = (float) $output_array[0];
@@ -39,6 +39,6 @@ foreach ($content as $key => $value) {
         $factorFormaCaja[0][0] = $factoresdeforma[rand(0, count($factoresdeforma) - 1)];
     }
     //echo $key . ' Factor de forma: ' . $factorFormaCaja[0][0] . '<br>';
-    $caja->setTipo_placa_base($factorFormaCaja[0][0]);
+    $caja->setTipo_placa_base(str_replace(" ", "", $factorFormaCaja[0][0]));
     $caja->registrar();
 }

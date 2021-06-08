@@ -3,12 +3,12 @@
 require_once './BBDD_Entidades/Componente.php';
 require_once './BBDD_Entidades/Memoria_ram.php';
 
-$jsonCont = file_get_contents('./JSON_bbdd/MemoriasRAMSPECTS___Google_Shopping.json');
+$jsonCont = file_get_contents('./NUEVOS_JSON/MemoriasRAMSPECTS___Google_Shopping.json');
 $content = json_decode($jsonCont, true);
 foreach ($content as $key => $value) {
     $nombre = $value['nombre'];
     $proveedor = $value['Vendidopor'];
-    preg_match('/([0-9.])+/', $value['Preciodelartículo'], $output_array);
+    preg_match('/([0-9.])+/', $value['Preciodelarticulo'], $output_array);
     $precio_articulo = (float) $output_array[0];
     preg_match('/([0-9.])+/', $value['Preciototal'], $output_array);
     $precio_total = (float) $output_array[0];
@@ -31,22 +31,21 @@ foreach ($content as $key => $value) {
     $ddrMemoria = ['DDR4', 'DDR3'];
     $almacenamientoMemoria = ['8GB', '16GB'];
     $frecuenciaMemoria = ['3733 MhZ', '3200 MHz', '3000 MHz'];
-    $caracteristicas2 = $value['caracteristicas2'];
     preg_match_all('/(DDR4|ddr4|DDR3|ddr3|DDR2|ddr2)/', $caracteristicas, $ddr);
     preg_match_all('/([A-Za-z0-9]*\sGB|[A-Za-z0-9]*GB|[A-Za-z0-9]*gb|[A-Za-z0-9]*Gb|[A-Za-z0-9]*\sTB|[A-Za-z0-9]*TB|[A-Za-z0-9]*tb|[A-Za-z0-9]*tb)/', $caracteristicas, $almacenamientoRAM);
     preg_match_all('/([A-Za-z0-9]*\sMhZ|[A-Za-z0-9.]*MHZ|[A-Za-z0-9.]*Mhz|[A-Za-z0-9.]*mhz|[A-Za-z0-9.]*\sMHz)/', $caracteristicas, $frecuenciaRAM);
 
-    if (!isset($ddr[0][0])) {
+    /*if (!isset($ddr[0][0])) {
         preg_match_all('/(DDR4|ddr4|DDR3|ddr3|DDR2|ddr2)/', $caracteristicas2, $ddr);
-    }
+    }*/
 
     if (!isset($ddr[0][0])) {
         $ddr[0][0] = $ddrMemoria[rand(0, count($ddrMemoria) - 1)];
     }
 
-    if (!isset($almacenamientoRAM[0][0])) {
+    /*if (!isset($almacenamientoRAM[0][0])) {
         preg_match_all('/([A-Za-z0-9]*\sGB|[A-Za-z0-9]*GB|[A-Za-z0-9]*gb|[A-Za-z0-9]*Gb|[A-Za-z0-9]*\sTB|[A-Za-z0-9]*TB|[A-Za-z0-9]*tb|[A-Za-z0-9]*tb)/', $caracteristicas2, $almacenamientoRAM);
-    }
+    }*/
 
     if (!isset($almacenamientoRAM[0][0])) {
         $almacenamientoRAM[0][0] = $almacenamientoMemoria[rand(0, count($almacenamientoMemoria) - 1)];

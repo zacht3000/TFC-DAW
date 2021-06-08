@@ -1,5 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/database.php");
+include_once($_SERVER['DOCUMENT_ROOT']."/database.php");
 
 class Procesador {
 
@@ -21,9 +21,9 @@ class Procesador {
     
     public function getProcesadorGenerador($min, $max) {
         if($max > 0){
-            $query = $this->db->query('SELECT p.id_componente, c.nombre, c.proveedor, c.precio_total, p.socket, p.frecuencia, p.nucleos FROM procesador p, componente c WHERE c.id = p.id_componente AND p.nucleos => '. $min .' AND p.nucleos <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+            $query = $this->db->query('SELECT p.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,p.socket, p.frecuencia, p.nucleos, c.tipo as "tipo_componente" FROM procesador p, componente c WHERE c.id = p.id_componente AND p.nucleos >= '. $min .' AND p.nucleos <= ' .$max . ' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
         } else {
-            $query = $this->db->query('SELECT p.id_componente, c.nombre, c.proveedor, c.precio_total, p.socket, p.frecuencia, p.nucleos FROM procesador p, componente c WHERE c.id = p.id_componente AND p.nucleos = '. $min .' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
+            $query = $this->db->query('SELECT p.id_componente, c.nombre, c.proveedor, c.precio_total, c.url_articulo,p.socket, p.frecuencia, p.nucleos, c.tipo as "tipo_componente" FROM procesador p, componente c WHERE c.id = p.id_componente AND p.nucleos = '. $min .' GROUP BY c.nombre ORDER BY c.precio_total LIMIT 1;');
         }
 
         return $query->fetch_all(MYSQLI_ASSOC);
